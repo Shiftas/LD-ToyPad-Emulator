@@ -182,6 +182,7 @@
             max-height: 5em;
             max-width: 7em;
         }
+
         .item p {
             margin: 0;
         }
@@ -328,9 +329,11 @@
             border-radius: 5px;
             transition: background-color 0.3s ease;
         }
+
         .gallery-toggle:hover {
             background-color: #0056b3;
         }
+
         .gallery {
             display: flex;
             flex-wrap: wrap;
@@ -504,54 +507,50 @@
     $(function () {
 
         // Pre-load character and vehicle data, since it is required for the operation of the page and there are multiple places it is used
-        var characters = [
-            {        "id": 1,         "name": "Batman",                         "world": "DC Comics",                                   "abilities": "Grapple,Boomerang,Stealth,Rope Swing,Glide,Detective Mode,Master Build", "image": "images/001_Batman.jpg" },
-            {        "id": 2,         "name": "Gandalf",                        "world": "The Lord of the Rings",                       "abilities": "Magic,Magical Shield,Illumination", "image": "images/002_Gandalf.jpg" },
-            {        "id": 3,         "name": "Wyldstyle",                      "world": "The LEGO Movie",                                    "abilities": "Spinjitzu,Stealth,Pole Vault,Acrobat,Glide", "image": "images/037_Sensei_Wu.jpg" },
-        ];
-        var vehicles = [];
+        var characters;
+        var vehicles;
 
-        // $.ajax({
-        // 	dataType: "json",
-        // 	url: 'json/charactermap.json',
-        // 	async: false,
-        // 	success: function (data) {
-        // 		characters = data;
-        // 	}
-        // });
+        $.ajax({
+        	dataType: "json",
+        	url: 'json/charactermap.json',
+        	async: false,
+        	success: function (data) {
+        		characters = data;
+        	}
+        });
 
-        // $.ajax({
-        //     dataType: "json",
-        //     url: 'json/tokenmap.json',
-        //     async: false,
-        //     success: function (data) {
-        //         vehicles = data;
-        //     }
-        // });
+        $.ajax({
+            dataType: "json",
+            url: 'json/tokenmap.json',
+            async: false,
+            success: function (data) {
+                vehicles = data;
+            }
+        });
 
-        characters.forEach(function(character) {
+        characters.forEach(function (character) {
             $('#character-gallery').append(
                 '<div class="gallery-item" data-id="' + character.id + '">' +
-                    '<img src="' + character.image + '" alt="' + character.name + '">' +
-                    '<p>' + character.name + '</p>' +
+                '<img src="' + character.image + '" alt="' + character.name + '">' +
+                '<p>' + character.name + '</p>' +
                 '</div>'
             );
         });
-        vehicles.forEach(function(vehicle) {
+        vehicles.forEach(function (vehicle) {
             $('#vehicle-gallery').append(
                 '<div class="gallery-item" data-vehicleId="' + vehicle.id + '">' +
-                    '<img src="' + vehicle.image + '" alt="' + vehicle.name + '">' +
-                    '<p>' + vehicle.name + '</p>' +
+                '<img src="' + vehicle.image + '" alt="' + vehicle.name + '">' +
+                '<p>' + vehicle.name + '</p>' +
                 '</div>'
             );
         });
         $('#vehicle-gallery').toggle();
         $('#character-gallery').hide();
-        $('#toggle-character-gallery').on('click', function() {
+        $('#toggle-character-gallery').on('click', function () {
             $('#character-gallery').toggle();
             $('#vehicle-gallery').hide();
         });
-        $('#toggle-vehicle-gallery').on('click', function() {
+        $('#toggle-vehicle-gallery').on('click', function () {
             $('#vehicle-gallery').toggle();
             $('#character-gallery').hide();
         });
